@@ -20,7 +20,7 @@ function passwordMatches(input: string, expected: string): boolean {
 
 export async function requireUnlocked() {
   const session = await useSession<GateSession>(sessionConfig);
-  if (!session.data.unlocked) throw redirect({ to: "/login" });
+  if (!session.data.unlocked) throw redirect({ to: "/login" as any });
   return session;
 }
 

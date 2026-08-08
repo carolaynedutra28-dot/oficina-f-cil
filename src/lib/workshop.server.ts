@@ -228,12 +228,13 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
   if (error) throw error;
 
   if ((status === "finished" || status === "paid") && order.status !== "paid" && order.status !== "finished") {
+    const today: string = new Date().toISOString().split("T")[0];
     await supabase.from("cash_flow").insert({
       type: "income",
       category: "Serviços",
       description: `Pagamento OS ${order.number}`,
       amount: order.total,
-      date: new Date().toISOString().split("T")[0],
+      date: today,
       order_id: order.id,
     });
   }
