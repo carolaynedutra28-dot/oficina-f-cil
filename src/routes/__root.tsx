@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { checkUnlocked, lockSite } from "@/lib/gate.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 
 function NotFoundComponent() {
   return (
@@ -77,11 +80,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Oficina Mecânica" },
+      { name: "description", content: "Sistema de gestão para oficina mecânica" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Oficina Mecânica" },
+      { property: "og:description", content: "Sistema de gestão para oficina mecânica" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -102,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
@@ -119,8 +122,69 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AppShell />
     </QueryClientProvider>
+  );
+}
+
+function AppShell() {
+  const check = useServerFn(checkUnlocked);
+  const logout = useServerFn(lockSite);
+  const router = useRouter();
+  const { data: session } = useQuery({
+    queryKey: ["gate"],
+    queryFn: () => check(),
+  });
+
+  const isLoggedIn = session?.unlocked ?? false;
+
+  async function handleLogout() {
+    await logout();
+    await router.navigate({ to: "/login" });
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      {isLoggedIn && (
+        <header className="border-b bg-card px-4 py-3">
+          <div className="mx-auto flex max-w-6xl items-center justify-between">
+            <nav className="flex items-center gap-6">
+              <Link to="/dashboard" className="font-semibold text-foreground">
+                Oficina
+              </Link>
+              <div className="hidden items-center gap-4 text-sm sm:flex">
+                <Link to="/dashboard" className="text-muted-foreground hover:text-foreground">
+                  Dashboard
+                </Link>
+                <Link to="/orders" className="text-muted-foreground hover:text-foreground">
+                  Ordens
+                </Link>
+                <Link to="/customers" className="text-muted-foreground hover:text-foreground">
+                  Clientes
+                </Link>
+                <Link to="/products" className="text-muted-foreground hover:text-foreground">
+                  Estoque
+                </Link>
+                <Link to="/cash-flow" className="text-muted-foreground hover:text-foreground">
+                  Caixa
+                </Link>
+                <Link to="/reports" className="text-muted-foreground hover:text-foreground">
+                  Relatórios
+                </Link>
+              </div>
+            </nav>
+            <button
+              onClick={handleLogout}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Sair
+            </button>
+          </div>
+        </header>
+      )}
+      <main className={isLoggedIn ? "mx-auto max-w-6xl p-4" : ""}>
+        <Outlet />
+      </main>
+    </div>
   );
 }
