@@ -48,7 +48,12 @@ export const createCustomerFn = createServerFn({ method: "POST" })
   .inputValidator((data: { name: string; phone?: string; document?: string; address?: string }) => data)
   .handler(async ({ data }) => {
     await requireUnlocked();
-    return createCustomer(data);
+    return createCustomer({
+      name: data.name,
+      phone: data.phone ?? null,
+      document: data.document ?? null,
+      address: data.address ?? null,
+    });
   });
 
 export const listVehiclesFn = createServerFn({ method: "GET" })
@@ -62,7 +67,13 @@ export const createVehicleFn = createServerFn({ method: "POST" })
   .inputValidator((data: { customer_id: string; plate?: string; model: string; year?: number; color?: string }) => data)
   .handler(async ({ data }) => {
     await requireUnlocked();
-    return createVehicle(data);
+    return createVehicle({
+      customer_id: data.customer_id,
+      plate: data.plate ?? null,
+      model: data.model,
+      year: data.year ?? null,
+      color: data.color ?? null,
+    });
   });
 
 export const listProductsFn = createServerFn({ method: "GET" }).handler(async () => {
@@ -83,7 +94,14 @@ export const createProductFn = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     await requireUnlocked();
-    return createProduct(data);
+    return createProduct({
+      name: data.name,
+      code: data.code ?? null,
+      quantity: data.quantity,
+      min_quantity: data.min_quantity,
+      cost_price: data.cost_price,
+      sale_price: data.sale_price,
+    });
   });
 
 export const listOrdersFn = createServerFn({ method: "GET" }).handler(async () => {
@@ -121,7 +139,7 @@ export const updateOrderStatusFn = createServerFn({ method: "POST" })
   });
 
 export const listCashFlowFn = createServerFn({ method: "GET" })
-  .inputValidator((data: { start?: string; end?: string; type?: "income" | "expense" }) => data)
+  .inputValidator((data?: { start?: string; end?: string; type?: "income" | "expense" }) => data ?? {})
   .handler(async ({ data }) => {
     await requireUnlocked();
     return listCashFlow(data);

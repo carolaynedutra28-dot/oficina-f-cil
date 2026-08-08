@@ -40,9 +40,9 @@ export async function ensureSettings(defaults: Partial<WorkshopSettings>) {
 export type Customer = {
   id: string;
   name: string;
-  phone: string | null;
-  document: string | null;
-  address: string | null;
+  phone?: string | null;
+  document?: string | null;
+  address?: string | null;
 };
 
 export async function listCustomers(): Promise<Customer[]> {
@@ -69,10 +69,10 @@ export async function createCustomer(input: Omit<Customer, "id">): Promise<Custo
 export type Vehicle = {
   id: string;
   customer_id: string;
-  plate: string | null;
+  plate?: string | null;
   model: string;
-  year: number | null;
-  color: string | null;
+  year?: number | null;
+  color?: string | null;
 };
 
 export async function listVehicles(customerId?: string): Promise<Vehicle[]> {
@@ -94,7 +94,7 @@ export async function createVehicle(input: Omit<Vehicle, "id">): Promise<Vehicle
 export type Product = {
   id: string;
   name: string;
-  code: string | null;
+  code?: string | null;
   quantity: number;
   min_quantity: number;
   cost_price: number;
