@@ -95,6 +95,7 @@ function Products() {
           </tbody>
         </table>
       </div>
+      <Outlet />
     </div>
   );
 }
