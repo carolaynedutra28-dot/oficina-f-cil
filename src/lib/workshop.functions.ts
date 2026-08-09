@@ -18,7 +18,7 @@ import {
   createCashFlow,
   updateProductQuantity,
 } from "./workshop.server";
-import { requireUnlocked } from "./gate.functions";
+import { requireUnlockedFn } from "./gate.functions";
 
 export type { Customer, Vehicle, Product, Order, OrderItem, OrderStatus, CashFlow, WorkshopSettings } from "./workshop.server";
 

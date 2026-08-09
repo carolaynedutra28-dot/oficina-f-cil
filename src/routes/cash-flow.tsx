@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, useQuery } from "@tanstack/react-query";
 import { queryOptions } from "@tanstack/react-query";
 import { listCashFlowFn } from "@/lib/workshop.functions";
-import { requireUnlocked } from "@/lib/gate.functions";
+import { requireUnlockedFn } from "@/lib/gate.functions";
 import { useState } from "react";
 
 export const Route = createFileRoute("/cash-flow")({

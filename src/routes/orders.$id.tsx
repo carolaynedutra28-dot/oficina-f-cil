@@ -3,7 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "@tanstack/react-query";
 import { getOrderFn, updateOrderStatusFn, getCustomerFn } from "@/lib/workshop.functions";
 import { useServerFn } from "@tanstack/react-start";
-import { requireUnlocked } from "@/lib/gate.functions";
+import { requireUnlockedFn } from "@/lib/gate.functions";
 import { useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/orders/$id")({

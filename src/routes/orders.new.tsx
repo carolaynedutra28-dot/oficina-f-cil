@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "@tanstack/react-query";
 import { listCustomersFn, listProductsFn, createOrderFn } from "@/lib/workshop.functions";
 import { useServerFn } from "@tanstack/react-start";
-import { requireUnlocked } from "@/lib/gate.functions";
+import { requireUnlockedFn } from "@/lib/gate.functions";
 
 const newOrderQueryOptions = queryOptions({
   queryKey: ["new-order"],

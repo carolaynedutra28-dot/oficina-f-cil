@@ -2,7 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { createCustomerFn } from "@/lib/workshop.functions";
 import { useServerFn } from "@tanstack/react-start";
-import { requireUnlocked } from "@/lib/gate.functions";
+import { requireUnlockedFn } from "@/lib/gate.functions";
 
 export const Route = createFileRoute("/customers/new")({
   beforeLoad: async () => {

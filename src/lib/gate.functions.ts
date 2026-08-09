@@ -33,7 +33,7 @@ export const checkUnlocked = createServerFn({ method: "GET" }).handler(async () 
 });
 
 export const requireUnlockedFn = createServerFn({ method: "GET" }).handler(async () => {
-  const { requireUnlocked } = await import("./gate.server");
+  const { requireUnlockedFn } = await import("./gate.server");
   await requireUnlocked();
   return { ok: true as const };
 });

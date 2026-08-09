@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { getOrder, getCustomer, getSettings } from "@/lib/workshop.server";
-import { requireUnlocked } from "@/lib/gate.functions";
+import { requireUnlockedFn } from "@/lib/gate.functions";
 
 export const Route = createFileRoute("/api/orders/$id.pdf")({
   server: {
