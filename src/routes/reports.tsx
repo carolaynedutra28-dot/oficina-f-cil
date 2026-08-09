@@ -28,8 +28,10 @@ function Reports() {
       result[i.toString().padStart(2, "0")] = { income: 0, expense: 0 };
     }
     for (const entry of entries) {
-      const [entryYear, month] = entry.date.split("-");
-      if (entryYear !== year) continue;
+      const parts = entry.date.split("-");
+      const entryYear = parts[0];
+      const month = parts[1];
+      if (!month || entryYear !== year) continue;
       if (entry.type === "income") result[month].income += Number(entry.amount);
       else result[month].expense += Number(entry.amount);
     }

@@ -45,8 +45,10 @@ function OrderDetail() {
     );
   }
 
+  const orderData = order;
+
   async function setStatus(status: "pending" | "approved" | "in_progress" | "finished" | "paid") {
-    await updateStatus({ data: { id: order.id, status } });
+    await updateStatus({ data: { id: orderData.id, status } });
     await queryClient.invalidateQueries({ queryKey: ["order", id] });
     await queryClient.invalidateQueries({ queryKey: ["orders"] });
     await queryClient.invalidateQueries({ queryKey: ["cash-flow"] });

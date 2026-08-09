@@ -55,12 +55,14 @@ function NewOrder() {
         customer_id: String(form.get("customer_id")),
         description: String(form.get("description") || "").trim() || undefined,
         labor_value: Number(form.get("labor_value")),
-        items: items.map((item) => ({
-          product_id: item.product_id || undefined,
-          description: item.description,
-          quantity: item.quantity,
-          unit_price: item.unit_price,
-        })),
+        items: items.map((item) => {
+          const base = {
+            description: item.description,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+          };
+          return item.product_id ? { ...base, product_id: item.product_id } : base;
+        }),
       },
     });
     setSaving(false);
