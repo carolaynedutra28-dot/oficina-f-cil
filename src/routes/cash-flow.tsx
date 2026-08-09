@@ -137,6 +137,7 @@ function CashFlow() {
           </tbody>
         </table>
       </div>
+      <Outlet />
     </div>
   );
 }
