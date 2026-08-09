@@ -77,6 +77,7 @@ function Orders() {
           </tbody>
         </table>
       </div>
+      <Outlet />
     </div>
   );
 }
