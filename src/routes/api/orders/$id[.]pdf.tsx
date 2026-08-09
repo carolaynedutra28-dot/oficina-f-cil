@@ -25,10 +25,10 @@ export const Route = createFileRoute("/api/orders/$id.pdf")({
         const margin = 40;
         let y = height - margin;
 
-        function text(x: number, value: string, options?: { size?: number; bold?: boolean; color?: ReturnType<typeof rgb> }) {
-          const size = options?.size || 10;
-          const f = options?.bold ? fontBold : font;
-          page.drawText(value, { x, y, size, font: f, color: options?.color ?? rgb(0.1, 0.1, 0.1) });
+        function text(x: number, value: string, options: { size?: number; bold?: boolean; color?: ReturnType<typeof rgb> } = {}) {
+          const size = options.size ?? 10;
+          const f = options.bold ? fontBold : font;
+          page.drawText(value, { x, y, size, font: f, color: options.color ?? rgb(0.1, 0.1, 0.1) });
         }
 
         function line(value: string, label?: string, options?: { size?: number; bold?: boolean }) {
