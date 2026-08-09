@@ -61,6 +61,7 @@ function Customers() {
           </tbody>
         </table>
       </div>
+      <Outlet />
     </div>
   );
 }
