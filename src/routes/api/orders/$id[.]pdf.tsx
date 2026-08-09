@@ -3,7 +3,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { getOrder, getCustomer, getSettings } from "@/lib/workshop.server";
 import { requireUnlocked } from "@/lib/gate.functions";
 
-export const Route = createFileRoute("/api/orders/$id/pdf")({
+export const Route = createFileRoute("/api/orders/$id.pdf")({
   server: {
     handlers: {
       GET: async ({ params }) => {
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/orders/$id/pdf")({
         let y = height - margin;
 
         function text(x: number, value: string, options?: { size?: number; bold?: boolean; color?: ReturnType<typeof rgb> }) {
-          const size = options?.size ?? 10;
+          const size = options?.size || 10;
           const f = options?.bold ? fontBold : font;
           page.drawText(value, { x, y, size, font: f, color: options?.color ?? rgb(0.1, 0.1, 0.1) });
         }
