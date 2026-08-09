@@ -31,7 +31,7 @@ function Reports() {
       const parts = entry.date.split("-");
       const entryYear = parts[0];
       const month = parts[1];
-      if (!month || entryYear !== year) continue;
+      if (!month || entryYear !== year || !result[month]) continue;
       if (entry.type === "income") result[month].income += Number(entry.amount);
       else result[month].expense += Number(entry.amount);
     }

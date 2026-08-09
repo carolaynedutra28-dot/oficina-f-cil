@@ -50,21 +50,21 @@ function NewOrder() {
     e.preventDefault();
     setSaving(true);
     const form = new FormData(e.currentTarget);
-    await create({
-      data: {
-        customer_id: String(form.get("customer_id")),
-        description: String(form.get("description") || "").trim() || undefined,
-        labor_value: Number(form.get("labor_value")),
-        items: items.map((item) => {
-          const base = {
-            description: item.description,
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-          };
-          return item.product_id ? { ...base, product_id: item.product_id } : base;
-        }),
-      },
-    });
+    const payload: Parameters<typeof create>[0]["data"] = {
+      customer_id: String(form.get("customer_id")),
+      labor_value: Number(form.get("labor_value")),
+      items: items.map((item) => {
+        const base = {
+          description: item.description,
+          quantity: item.quantity,
+          unit_price: item.unit_price,
+        };
+        return item.product_id ? { ...base, product_id: item.product_id } : base;
+      }),
+    };
+    const description = String(form.get("description") || "").trim();
+    if (description) payload.description = description;
+    await create({ data: payload });
     setSaving(false);
     await router.navigate({ to: "/orders" });
   }
