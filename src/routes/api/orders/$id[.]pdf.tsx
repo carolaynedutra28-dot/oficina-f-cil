@@ -7,7 +7,7 @@ export const Route = createFileRoute("/api/orders/$id.pdf")({
   server: {
     handlers: {
       GET: async ({ params }) => {
-        await requireUnlocked();
+        await requireUnlockedFn();
         const orderId = (params as Record<string, string>)["id.pdf"]?.split(".")[0] ?? "";
         const order = await getOrder(orderId);
         if (!order) {

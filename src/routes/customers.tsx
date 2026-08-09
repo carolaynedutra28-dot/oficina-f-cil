@@ -11,7 +11,7 @@ const customersQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/customers")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(customersQueryOptions),
   component: Customers,

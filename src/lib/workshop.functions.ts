@@ -23,33 +23,33 @@ import { requireUnlockedFn } from "./gate.functions";
 export type { Customer, Vehicle, Product, Order, OrderItem, OrderStatus, CashFlow, WorkshopSettings } from "./workshop.server";
 
 export const getWorkshopSettingsFn = createServerFn({ method: "GET" }).handler(async () => {
-  await requireUnlocked();
+  await requireUnlockedFn();
   return getSettings();
 });
 
 export const ensureWorkshopSettingsFn = createServerFn({ method: "POST" })
   .inputValidator((data: { name: string; document?: string; phone?: string; address?: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return ensureSettings(data);
   });
 
 export const listCustomersFn = createServerFn({ method: "GET" }).handler(async () => {
-  await requireUnlocked();
+  await requireUnlockedFn();
   return listCustomers();
 });
 
 export const getCustomerFn = createServerFn({ method: "GET" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return getCustomer(data.id);
   });
 
 export const createCustomerFn = createServerFn({ method: "POST" })
   .inputValidator((data: { name: string; phone?: string; document?: string; address?: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return createCustomer({
       name: data.name,
       phone: data.phone ?? null,
@@ -61,14 +61,14 @@ export const createCustomerFn = createServerFn({ method: "POST" })
 export const listVehiclesFn = createServerFn({ method: "GET" })
   .inputValidator((data: { customerId?: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return listVehicles(data.customerId);
   });
 
 export const createVehicleFn = createServerFn({ method: "POST" })
   .inputValidator((data: { customer_id: string; plate?: string; model: string; year?: number; color?: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return createVehicle({
       customer_id: data.customer_id,
       plate: data.plate ?? null,
@@ -79,14 +79,14 @@ export const createVehicleFn = createServerFn({ method: "POST" })
   });
 
 export const listProductsFn = createServerFn({ method: "GET" }).handler(async () => {
-  await requireUnlocked();
+  await requireUnlockedFn();
   return listProducts();
 });
 
 export const getProductFn = createServerFn({ method: "GET" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return getProduct(data.id);
   });
 
@@ -95,7 +95,7 @@ export const createProductFn = createServerFn({ method: "POST" })
     (data: { name: string; code?: string; quantity: number; min_quantity: number; cost_price: number; sale_price: number }) => data
   )
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return createProduct({
       name: data.name,
       code: data.code ?? null,
@@ -107,14 +107,14 @@ export const createProductFn = createServerFn({ method: "POST" })
   });
 
 export const listOrdersFn = createServerFn({ method: "GET" }).handler(async () => {
-  await requireUnlocked();
+  await requireUnlockedFn();
   return listOrders();
 });
 
 export const getOrderFn = createServerFn({ method: "GET" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return getOrder(data.id);
   });
 
@@ -129,21 +129,21 @@ export const createOrderFn = createServerFn({ method: "POST" })
     }) => data
   )
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return createOrder(data);
   });
 
 export const updateOrderStatusFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string; status: "pending" | "approved" | "in_progress" | "finished" | "paid" }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return updateOrderStatus(data.id, data.status);
   });
 
 export const listCashFlowFn = createServerFn({ method: "GET" })
   .inputValidator((data?: { start?: string; end?: string; type?: "income" | "expense" }) => data ?? {})
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return listCashFlow(data);
   });
 
@@ -152,13 +152,13 @@ export const createCashFlowFn = createServerFn({ method: "POST" })
     (data: { type: "income" | "expense"; category: string; description: string; amount: number; date: string; order_id?: string }) => data
   )
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return createCashFlow(data);
   });
 
 export const updateProductQuantityFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string; delta: number }) => data)
   .handler(async ({ data }) => {
-    await requireUnlocked();
+    await requireUnlockedFn();
     return updateProductQuantity(data.id, data.delta);
   });

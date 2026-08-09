@@ -12,7 +12,7 @@ const cashFlowQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/reports")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(cashFlowQueryOptions),
   component: Reports,

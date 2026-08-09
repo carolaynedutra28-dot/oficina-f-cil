@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/orders/$id")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(orderQueryOptions(params.id)),

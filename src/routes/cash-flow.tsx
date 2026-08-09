@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export const Route = createFileRoute("/cash-flow")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(cashFlowQueryOptions({})),
   component: CashFlow,

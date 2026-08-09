@@ -6,7 +6,7 @@ import { requireUnlockedFn } from "@/lib/gate.functions";
 
 export const Route = createFileRoute("/products/new")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   component: NewProduct,
 });

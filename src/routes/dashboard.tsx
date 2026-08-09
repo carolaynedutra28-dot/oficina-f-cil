@@ -18,7 +18,7 @@ const dashboardQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(dashboardQueryOptions),
   component: Dashboard,

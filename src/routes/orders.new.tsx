@@ -16,7 +16,7 @@ const newOrderQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/orders/new")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(newOrderQueryOptions),
   component: NewOrder,

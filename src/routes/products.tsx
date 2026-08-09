@@ -13,7 +13,7 @@ const productsQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/products")({
   beforeLoad: async () => {
-    await requireUnlocked();
+    await requireUnlockedFn();
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(productsQueryOptions),
   component: Products,
