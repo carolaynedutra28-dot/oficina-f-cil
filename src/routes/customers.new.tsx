@@ -20,14 +20,16 @@ function NewCustomer() {
     e.preventDefault();
     setSaving(true);
     const form = new FormData(e.currentTarget);
-    await create({
-      data: {
-        name: String(form.get("name")),
-        phone: String(form.get("phone") || "").trim() || undefined,
-        document: String(form.get("document") || "").trim() || undefined,
-        address: String(form.get("address") || "").trim() || undefined,
-      },
-    });
+    const payload: Parameters<typeof create>[0]["data"] = {
+      name: String(form.get("name")),
+    };
+    const phone = String(form.get("phone") || "").trim();
+    const document = String(form.get("document") || "").trim();
+    const address = String(form.get("address") || "").trim();
+    if (phone) payload.phone = phone;
+    if (document) payload.document = document;
+    if (address) payload.address = address;
+    await create({ data: payload });
     setSaving(false);
     await router.navigate({ to: "/customers" });
   }
