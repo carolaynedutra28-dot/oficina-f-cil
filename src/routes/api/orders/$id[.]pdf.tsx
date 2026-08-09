@@ -3,12 +3,13 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { getOrder, getCustomer, getSettings } from "@/lib/workshop.server";
 import { requireUnlocked } from "@/lib/gate.functions";
 
-export const Route = createFileRoute("/api/orders/$id.pdf")({
+export const Route = createFileRoute("/api/orders/$id/pdf")({
   server: {
     handlers: {
       GET: async ({ params }) => {
         await requireUnlocked();
-        const order = await getOrder(params.id);
+        const orderId = (params as Record<string, string>)["id.pdf"]?.split(".")[0] ?? "";
+        const order = await getOrder(orderId);
         if (!order) {
           return new Response("Ordem não encontrada", { status: 404 });
         }
@@ -97,7 +98,7 @@ export const Route = createFileRoute("/api/orders/$id.pdf")({
         });
 
         const pdfBytes = await pdfDoc.save();
-        return new Response(pdfBytes, {
+        return new Response(pdfBytes.buffer, {
           headers: {
             "Content-Type": "application/pdf",
             "Content-Disposition": `inline; filename="${order.number}.pdf"`,
