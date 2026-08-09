@@ -37,7 +37,7 @@ export const Route = createFileRoute("/api/orders/$id.pdf")({
           y -= (options?.size ?? 10) + 6;
         }
 
-        text(margin, settings?.name ?? "Oficina Mecânica", { size: 18, bold: true });
+        text(margin, settings?.name ?? "Belmoch Garage", { size: 18, bold: true });
         y -= 24;
         if (settings?.document) line(settings.document, "CNPJ/CPF");
         if (settings?.phone) line(settings.phone, "Telefone");

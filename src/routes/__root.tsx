@@ -10,6 +10,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import logoAsset from "@/assets/belmoch-logo.jpg.asset.json";
+
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { checkUnlocked, lockSite } from "@/lib/gate.functions";
 import { useServerFn } from "@tanstack/react-start";
@@ -80,11 +82,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Oficina Mecânica" },
-      { name: "description", content: "Sistema de gestão para oficina mecânica" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Oficina Mecânica" },
-      { property: "og:description", content: "Sistema de gestão para oficina mecânica" },
+      { title: "Belmoch Garage — Gestão da Oficina" },
+      { name: "description", content: "Sistema de gestão da Belmoch Garage: ordens de serviço, estoque, caixa e relatórios." },
+      { name: "author", content: "Belmoch Garage" },
+      { property: "og:title", content: "Belmoch Garage — Gestão da Oficina" },
+      { property: "og:description", content: "Sistema de gestão da Belmoch Garage: ordens de serviço, estoque, caixa e relatórios." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -94,8 +96,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
+
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -149,9 +152,11 @@ function AppShell() {
         <header className="border-b bg-card px-4 py-3">
           <div className="mx-auto flex max-w-6xl items-center justify-between">
             <nav className="flex items-center gap-6">
-              <Link to="/dashboard" className="font-semibold text-foreground">
-                Oficina
+              <Link to="/dashboard" className="flex items-center gap-2 font-semibold text-foreground">
+                <img src={logoAsset.url} alt="Belmoch Garage" className="h-8 w-8 rounded" />
+                <span className="hidden sm:inline">Belmoch Garage</span>
               </Link>
+
               <div className="hidden items-center gap-4 text-sm sm:flex">
                 <Link to="/dashboard" className="text-muted-foreground hover:text-foreground">
                   Dashboard
