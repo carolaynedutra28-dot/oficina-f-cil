@@ -22,6 +22,7 @@ import { Route as CustomersNewRouteImport } from './routes/customers.new'
 import { Route as OrdersIdRouteImport } from './routes/orders.$id'
 import { Route as OrdersNewRouteImport } from './routes/orders.new'
 import { Route as ProductsNewRouteImport } from './routes/products.new'
+import { Route as ApiOrdersIdDotpdfRouteImport } from './routes/api/orders/$id[.]pdf'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +89,11 @@ const ProductsNewRoute = ProductsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => ProductsRoute,
 } as any)
+const ApiOrdersIdDotpdfRoute = ApiOrdersIdDotpdfRouteImport.update({
+  id: '/api/orders/$id.pdf',
+  path: '/api/orders/$id.pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/orders/$id': typeof OrdersIdRoute
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
+  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/orders/$id': typeof OrdersIdRoute
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
+  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/orders/$id': typeof OrdersIdRoute
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
+  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
+    | '/api/orders/$id.pdf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
+    | '/api/orders/$id.pdf'
   id:
     | '__root__'
     | '/'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
+    | '/api/orders/$id.pdf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +204,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRouteWithChildren
   ProductsRoute: typeof ProductsRouteWithChildren
   ReportsRoute: typeof ReportsRoute
+  ApiOrdersIdDotpdfRoute: typeof ApiOrdersIdDotpdfRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -287,6 +300,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsNewRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/api/orders/$id.pdf': {
+      id: '/api/orders/$id.pdf'
+      path: '/api/orders/$id.pdf'
+      fullPath: '/api/orders/$id.pdf'
+      preLoaderRoute: typeof ApiOrdersIdDotpdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -348,6 +368,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRouteWithChildren,
   ProductsRoute: ProductsRouteWithChildren,
   ReportsRoute: ReportsRoute,
+  ApiOrdersIdDotpdfRoute: ApiOrdersIdDotpdfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

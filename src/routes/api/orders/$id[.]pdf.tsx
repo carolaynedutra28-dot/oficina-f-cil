@@ -3,7 +3,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { getOrder, getCustomer, getSettings } from "@/lib/workshop.server";
 import { requireUnlocked } from "@/lib/gate.functions";
 
-export const Route = createFileRoute("/api/orders/$id/pdf")({
+export const Route = createFileRoute("/api/orders/$id.pdf")({
   server: {
     handlers: {
       GET: async ({ params }) => {
