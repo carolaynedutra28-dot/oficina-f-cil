@@ -98,7 +98,8 @@ export const Route = createFileRoute("/api/orders/$id/pdf")({
         });
 
         const pdfBytes = await pdfDoc.save();
-        return new Response(pdfBytes.buffer, {
+        const buffer = Buffer.from(pdfBytes);
+        return new Response(buffer, {
           headers: {
             "Content-Type": "application/pdf",
             "Content-Disposition": `inline; filename="${order.number}.pdf"`,
