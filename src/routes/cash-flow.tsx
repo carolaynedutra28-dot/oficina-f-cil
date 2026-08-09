@@ -16,7 +16,7 @@ export const Route = createFileRoute("/cash-flow")({
 function cashFlowQueryOptions(filters: { start?: string; end?: string; type?: "income" | "expense" }) {
   return queryOptions({
     queryKey: ["cash-flow", filters],
-    queryFn: () => listCashFlowFn(filters),
+    queryFn: () => listCashFlowFn({ data: filters }),
   });
 }
 
@@ -25,10 +25,10 @@ function CashFlow() {
   const [end, setEnd] = useState("");
   const [type, setType] = useState<"income" | "expense" | "">("");
 
-  const filters = {
-    start: start || undefined,
-    end: end || undefined,
-    type: (type || undefined) as "income" | "expense" | undefined,
+  const filters: { start?: string; end?: string; type?: "income" | "expense" } = {
+    ...(start ? { start } : {}),
+    ...(end ? { end } : {}),
+    ...(type ? { type } : {}),
   };
 
   const { data: entries } = useQuery(cashFlowQueryOptions(filters));

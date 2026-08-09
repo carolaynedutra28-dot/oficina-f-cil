@@ -20,16 +20,16 @@ function NewProduct() {
     e.preventDefault();
     setSaving(true);
     const form = new FormData(e.currentTarget);
-    await create({
-      data: {
-        name: String(form.get("name")),
-        code: String(form.get("code")) || undefined,
-        quantity: Number(form.get("quantity")),
-        min_quantity: Number(form.get("min_quantity")),
-        cost_price: Number(form.get("cost_price")),
-        sale_price: Number(form.get("sale_price")),
-      },
-    });
+    const code = String(form.get("code") || "").trim();
+    const payload: Parameters<typeof create>[0]["data"] = {
+      name: String(form.get("name")),
+      quantity: Number(form.get("quantity")),
+      min_quantity: Number(form.get("min_quantity")),
+      cost_price: Number(form.get("cost_price")),
+      sale_price: Number(form.get("sale_price")),
+    };
+    if (code) payload.code = code;
+    await create({ data: payload });
     setSaving(false);
     await router.navigate({ to: "/products" });
   }
