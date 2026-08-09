@@ -20,6 +20,8 @@ import {
 } from "./workshop.server";
 import { requireUnlocked } from "./gate.functions";
 
+export type { Customer, Vehicle, Product, Order, OrderItem, OrderStatus, CashFlow, WorkshopSettings } from "./workshop.server";
+
 export const getWorkshopSettingsFn = createServerFn({ method: "GET" }).handler(async () => {
   await requireUnlocked();
   return getSettings();
