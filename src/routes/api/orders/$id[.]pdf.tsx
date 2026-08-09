@@ -65,7 +65,7 @@ export const Route = createFileRoute("/api/orders/$id.pdf")({
         y -= 16;
 
         // Table header
-        const colX = [margin, margin + 220, margin + 280, margin + 350, margin + 430];
+        const colX = [margin, margin + 220, margin + 280, margin + 350, margin + 430] as const;
         text(colX[0], "Descrição", { bold: true });
         text(colX[1], "Qtd", { bold: true });
         text(colX[2], "Unit.", { bold: true });
