@@ -28,8 +28,8 @@ export const lockSite = createServerFn({ method: "POST" }).handler(async () => {
 export const checkUnlocked = createServerFn({ method: "GET" }).handler(async () => {
   const { sessionConfig } = await import("./gate.server");
   const { useSession } = await import("@tanstack/react-start/server");
-  const session = await useSession(sessionConfig);
-  return { unlocked: !!session.data.unlocked };
+    const session = await useSession(sessionConfig);
+    return { unlocked: !!session.data['unlocked'] };
 });
 
 export const requireUnlockedFn = createServerFn({ method: "GET" }).handler(async () => {
