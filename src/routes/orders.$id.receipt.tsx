@@ -113,7 +113,7 @@ function ReceiptPage() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {order.items.map((item) => (
+                {order.items.map((item: OrderItem) => (
                   <tr key={item.id}>
                     <td className="py-2">{item.description}</td>
                     <td className="py-2 text-right">{item.quantity}</td>
