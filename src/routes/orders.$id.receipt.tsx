@@ -46,7 +46,8 @@ function ReceiptPage() {
     );
   }
 
-  const itemsTotal = order.items.reduce((sum, item) => sum + item.quantity * Number(item.unit_price), 0);
+  const itemsTotal = order.items.reduce((sum: number, item: OrderItem) => sum + item.quantity * Number(item.unit_price), 0);
+
 
   return (
     <div className="min-h-screen bg-white p-6 text-black">
