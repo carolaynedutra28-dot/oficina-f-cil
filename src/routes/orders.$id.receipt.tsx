@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { requireUnlockedFn } from "@/lib/gate.functions";
 import { getOrderFn, getCustomerFn, getWorkshopSettingsFn } from "@/lib/workshop.functions";
+import type { OrderItem } from "@/lib/workshop.functions";
+
 
 export const Route = createFileRoute("/orders/$id/receipt")({
   beforeLoad: async () => {
