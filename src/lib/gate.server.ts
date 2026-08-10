@@ -2,12 +2,16 @@ import { redirect } from "@tanstack/react-router";
 import { useSession } from "@tanstack/react-start/server";
 import { createHash, timingSafeEqual } from "node:crypto";
 
-export const sessionConfig = {
-  password: process.env['SESSION_SECRET']!,
-  name: "workshop-gate",
-  maxAge: 60 * 60 * 24 * 7,
-  cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
-};
+export function getSessionConfig() {
+  const secret = process.env['SESSION_SECRET'];
+  if (!secret) throw new Error("SESSION_SECRET is not set");
+  return {
+    password: secret,
+    name: "workshop-gate",
+    maxAge: 60 * 60 * 24 * 7,
+    cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
+  };
+}
 
 export type GateSession = { unlocked?: boolean };
 
@@ -18,7 +22,7 @@ export function passwordMatches(input: string, expected: string): boolean {
 }
 
 export async function requireUnlocked() {
-  const session = await useSession<GateSession>(sessionConfig);
+  const session = await useSession<GateSession>(getSessionConfig());
   if (!session.data.unlocked) throw redirect({ to: "/login" as any });
   return session;
 }
