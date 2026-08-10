@@ -22,7 +22,6 @@ import { Route as CustomersNewRouteImport } from './routes/customers.new'
 import { Route as OrdersIdRouteImport } from './routes/orders.$id'
 import { Route as OrdersNewRouteImport } from './routes/orders.new'
 import { Route as ProductsNewRouteImport } from './routes/products.new'
-import { Route as ApiOrdersIdDotpdfRouteImport } from './routes/api/orders/$id[.]pdf'
 import { Route as OrdersIdReceiptRouteImport } from './routes/orders.$id.receipt'
 
 const IndexRoute = IndexRouteImport.update({
@@ -90,11 +89,6 @@ const ProductsNewRoute = ProductsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => ProductsRoute,
 } as any)
-const ApiOrdersIdDotpdfRoute = ApiOrdersIdDotpdfRouteImport.update({
-  id: '/api/orders/$id.pdf',
-  path: '/api/orders/$id.pdf',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const OrdersIdReceiptRoute = OrdersIdReceiptRouteImport.update({
   id: '/receipt',
   path: '/receipt',
@@ -115,7 +109,6 @@ export interface FileRoutesByFullPath {
   '/orders/$id': typeof OrdersIdRouteWithChildren
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
-  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
   '/orders/$id/receipt': typeof OrdersIdReceiptRoute
 }
 export interface FileRoutesByTo {
@@ -132,7 +125,6 @@ export interface FileRoutesByTo {
   '/orders/$id': typeof OrdersIdRouteWithChildren
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
-  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
   '/orders/$id/receipt': typeof OrdersIdReceiptRoute
 }
 export interface FileRoutesById {
@@ -150,7 +142,6 @@ export interface FileRoutesById {
   '/orders/$id': typeof OrdersIdRouteWithChildren
   '/orders/new': typeof OrdersNewRoute
   '/products/new': typeof ProductsNewRoute
-  '/api/orders/$id.pdf': typeof ApiOrdersIdDotpdfRoute
   '/orders/$id/receipt': typeof OrdersIdReceiptRoute
 }
 export interface FileRouteTypes {
@@ -169,7 +160,6 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
-    | '/api/orders/$id.pdf'
     | '/orders/$id/receipt'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -186,7 +176,6 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
-    | '/api/orders/$id.pdf'
     | '/orders/$id/receipt'
   id:
     | '__root__'
@@ -203,7 +192,6 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/orders/new'
     | '/products/new'
-    | '/api/orders/$id.pdf'
     | '/orders/$id/receipt'
   fileRoutesById: FileRoutesById
 }
@@ -216,7 +204,6 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRouteWithChildren
   ProductsRoute: typeof ProductsRouteWithChildren
   ReportsRoute: typeof ReportsRoute
-  ApiOrdersIdDotpdfRoute: typeof ApiOrdersIdDotpdfRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,13 +299,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsNewRouteImport
       parentRoute: typeof ProductsRoute
     }
-    '/api/orders/$id.pdf': {
-      id: '/api/orders/$id.pdf'
-      path: '/api/orders/$id.pdf'
-      fullPath: '/api/orders/$id.pdf'
-      preLoaderRoute: typeof ApiOrdersIdDotpdfRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/orders/$id/receipt': {
       id: '/orders/$id/receipt'
       path: '/receipt'
@@ -399,8 +379,17 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRouteWithChildren,
   ProductsRoute: ProductsRouteWithChildren,
   ReportsRoute: ReportsRoute,
-  ApiOrdersIdDotpdfRoute: ApiOrdersIdDotpdfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
